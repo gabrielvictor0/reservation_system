@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace reservation_system.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Inital : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,7 +48,7 @@ namespace reservation_system.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    reservation_date = table.Column<DateOnly>(type: "date", nullable: false),
+                    reservation_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     userId = table.Column<int>(type: "int", nullable: false),
                     tableId = table.Column<int>(type: "int", nullable: false)

@@ -30,8 +30,8 @@ namespace reservation_system.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<DateOnly>("reservation_date")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("reservation_date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("status")
                         .IsRequired()

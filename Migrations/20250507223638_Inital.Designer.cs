@@ -12,8 +12,8 @@ using reservation_system.Contexts;
 namespace reservation_system.Migrations
 {
     [DbContext(typeof(ServiceDbContext))]
-    [Migration("20250507204053_Initial")]
-    partial class Initial
+    [Migration("20250507223638_Inital")]
+    partial class Inital
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,8 +33,8 @@ namespace reservation_system.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<DateOnly>("reservation_date")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("reservation_date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("status")
                         .IsRequired()

@@ -1,4 +1,5 @@
-﻿using reservation_system.Contexts;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using reservation_system.Contexts;
 using reservation_system.Domains;
 using reservation_system.DTO;
 using reservation_system.Interfaces;
@@ -14,6 +15,11 @@ namespace reservation_system.Repositories
             _ctx = ctx;
         }
 
+        public List<TableDomain> ListTables()
+        {
+            return _ctx.table.ToList();
+        }
+
         public void RegisterTable(TableDTO newTable)
         {
             TableDomain table = new ()
@@ -24,6 +30,52 @@ namespace reservation_system.Repositories
             };
 
             _ctx.table.Add(table);
+            _ctx.SaveChanges();
+        }
+
+        public void RemoveTable(int id)
+        {
+
+            try
+            {
+                TableDomain table = _ctx.table.Find(id)!;
+
+                if (table != null)
+                {
+                    _ctx.table.Remove(table);
+                    _ctx.SaveChanges();
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+
+        public void UpdateTable(TableDTO tableDTO, int id)
+        {
+            var table = _ctx.table.Find(id);
+
+            if(tableDTO.name != null)
+            {
+                table!.name = tableDTO.name;
+            }
+
+            if (tableDTO.capacity.HasValue)
+            {
+                table!.capacity = tableDTO.capacity;
+            }
+
+            if(tableDTO.status != null)
+            {
+                table!.status = tableDTO.status;
+            }
+
+            _ctx.table.Update(table!);
             _ctx.SaveChanges();
         }
     }

@@ -9,7 +9,7 @@ namespace reservation_system.Domains
         [Key]
         public int id { get; set; }
 
-        public DateOnly reservation_date { get; set; }
+        public DateTime reservation_date { get; set; }
 
         public string status { get; set; }
 
