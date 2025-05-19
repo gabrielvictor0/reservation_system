@@ -34,12 +34,11 @@ namespace reservation_system.Controllers
         [HttpPost("Login")]
         public IActionResult LoginUser([FromBody] LoginRequestDTO request)
         {
-
             var user = _userRepository.Login(request);
 
             if(user == null)
             {
-                return Unauthorized("Usuário inválido.");
+                return BadRequest("Usuário não encontrado.");
             }
 
             var token = _jwtTokenService.GenerateToken(user.id, user.name, user.role);

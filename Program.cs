@@ -37,6 +37,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<ITableRepository, TableRepository>();
+builder.Services.AddTransient<IReserveRepository, ReserveRepository>();
 
 // Add services to the container.
 builder.Services.AddScoped<JwtTokenService>();
@@ -48,7 +49,21 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", policy =>
+    {
+        policy
+            .AllowAnyOrigin() // ou .WithOrigins("http://localhost:5173") se quiser restringir
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
+
 var app = builder.Build();
+
+app.UseCors("CorsPolicy");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

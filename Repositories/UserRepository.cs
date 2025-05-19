@@ -21,17 +21,27 @@ namespace reservation_system.Repositories
 
         public UserDomain Login(LoginRequestDTO request)
         {
-            UserDomain user = _ctx.user.First(u => u.email == request.email);
-
-            if( user != null)
+ 
+            try
             {
-                if(BCrypt.Net.BCrypt.EnhancedVerify(request.password, user.password))
-                {
-                    return user;
-                }
-            }
+                UserDomain user = _ctx.user.First(u => u.email == request.email);
 
-            return null;
+                if (user != null)
+                {
+                    if (BCrypt.Net.BCrypt.EnhancedVerify(request.password, user.password))
+                    {
+                        return user;
+                    }
+                }
+
+                return null!;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null!;
+            }
+            
         }
 
         public void RegisterUser(UserDTO newUser)
