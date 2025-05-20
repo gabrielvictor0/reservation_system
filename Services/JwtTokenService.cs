@@ -22,11 +22,11 @@ namespace reservation_system.Services
             {
                 new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
                 new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
-                new Claim(ClaimTypes.Name, username),
+                new Claim("username", username),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())   
             };
 
-            claims.Add(new Claim(ClaimTypes.Role, roles));
+            claims.Add(new Claim("role", roles));  
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
